@@ -1,10 +1,20 @@
 const http=require('http')
+const fs=require('fs')
 const server=http.createServer((incomingMessage,serverResponse)=>{
   //  console.log(incomingMessage.url)
   if(incomingMessage.url=="/")
     serverResponse.end("This i have created online server")
     else if(incomingMessage.url=="/about")
     serverResponse.end("routed to about page")
+    else if(incomingMessage.url=="/userapi")
+    {
+    fs.readFile(`${__dirname}/NodeApi/userApi.json`,"utf-8",(err,data)=>{
+        console.log(data)
+        const obj=JSON.parse(data)//converting into object
+        serverResponse.end(obj.name)
+    })
+    fs.writeHead(200,{"content-type":"application/json"})
+    }
     else if(incomingMessage.url=="/contact")
     serverResponse.end("contact page")
     else{
