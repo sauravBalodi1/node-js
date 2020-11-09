@@ -11,14 +11,19 @@ server.on('request',(req,res)=>{
 
 //THIS WAS MY OLD WAY,NOW NEXT M DOING STREAMING WAY
 const rstream=fs.createReadStream("st.txt")
-rstream.on('data',(chunkData)=>{//data is a property
-res.write(chunkData)
-})
-rstream.on('end',()=>{//data is a property
-res.end()
-})
-rstream.on("error",()=>{
-    res.end("file not found")
-})
+// rstream.on('data',(chunkData)=>{//data is a property
+// res.write(chunkData)
+// })
+// rstream.on('end',()=>{//data is a property
+// res.end()
+// })
+// rstream.on("error",()=>{
+//     res.end("file not found")
+// })
+
+
+//using pipes
+rstream.pipe(res)//easy
+
 })
 server.listen(8000,"127.0.0.1")//isse server ko shuru kia hai
