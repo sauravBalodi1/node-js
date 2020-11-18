@@ -1,24 +1,35 @@
 const async=require("async")
 
+// var start=()=>{
+//     download(()=>{
+//         process(()=>{
+//             upload(()=>{
+//                   del(()=>{
+//                       console.log("Finished")
+//                   })
+//             })
+//         })
+//     })
+// }
+
 var start=()=>{
-    download(()=>{
-        process(()=>{
-            upload(()=>{
-                  del(()=>{
-                      console.log("Finished")
-                  })
-            })
-        })
+    console.log("starting")
+    async.waterfall([download,process,upload,del],(err,data)=>{
+           if(err)
+           console.log(`Error is :${err}`)
+           else
+           console.log(`Everything is done`)
     })
 }
 var download=(callback)=>{
     console.log("starting download")
     delay();
     console.log("Finished download")
-    callback();
+    callback(null,"passing data to process USING CALLBACK");
 }
-var process=(callback)=>{
+var process=(data,callback)=>{
     console.log("starting process")
+    console.log(`the data is: ${data}`)
     delay();
     console.log("Finishing process")
     callback();
